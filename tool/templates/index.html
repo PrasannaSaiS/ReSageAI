@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Screener</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .upload-area {
+            border: 2px dashed #999;
+            padding: 40px;
+            text-align: center;
+            margin: 100px auto;
+            width: 60%;
+            border-radius: 10px;
+            background: #ffffff;
+        }
+        .upload-area.dragover {
+            background-color: #e0ffe0;
+            border-color: #0f0;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        #upload-label {
+            padding: 10px 20px;
+            background-color: #2264bd;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3f3f3f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .logo-header {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="logo-header">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="AI Resume Screener Logo" class="logo">
+    </header>
+
+    <div class="upload-area" id="drop-area">
+        <h2>Upload Your Resume</h2>
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="resume" id="fileInput" accept=".pdf,.doc,.docx">
+            <label id="upload-label" for="fileInput">Choose or Drop Resume File</label>
+            <br>
+            <button type="submit">Proceed</button>
+        </form>
+        <p id="file-name-display"></p>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
