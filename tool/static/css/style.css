@@ -1,0 +1,104 @@
+/* General page style */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: #333;
+}
+
+/* Grid layout */
+.container {
+    display: grid;
+    grid-template-areas:
+        "score score"
+        "job_match criteria"
+        "errors suggestions";
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 30px 40px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.logo-header {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+
+/* Grid area styles */
+.score {
+    grid-area: score;
+    background: #ffffff;
+    padding: 20px;
+    border-left: 5px solid #4CAF50;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.job_match {
+    grid-area: job_match;
+    background: #ffffff;
+    padding: 20px;
+    border-left: 5px solid #2264bd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.criteria {
+    grid-area: criteria;
+    background: #ffffff;
+    padding: 20px;
+    border-left: 5px solid #FF9800;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.errors {
+    grid-area: errors;
+    background: #ffffff;
+    padding: 20px;
+    border-left: 5px solid #F44336;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions {
+    grid-area: suggestions;
+    background: #ffffff;
+    padding: 20px;
+    border-left: 5px solid #9C27B0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+h4 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #222;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        grid-template-areas:
+            "score"
+            "job_match"
+            "criteria"
+            "errors"
+            "suggestions";
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
