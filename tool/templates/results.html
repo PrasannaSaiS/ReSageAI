@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis Results</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fefefe;
+            padding: 40px;
+            padding-top: 100px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+        }
+        .score h2 {
+            font-size: 36px;
+            color: #34a853;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .tick {
+            color: green;
+            font-weight: bold;
+        }
+        .cross {
+            color: red;
+            font-weight: bold;
+        }
+        h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header class="logo-header">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="AI Resume Screener Logo" class="logo">
+    </header>
+
+    <h1>Resume Analysis Results</h1>
+    <div class="score section">
+        <h2>Sage Score: {{ score }} / 100</h2>
+    </div>
+
+    <div class="container">
+        <div class="section criteria">
+            <h3>Criteria Met</h3>
+            <ul>
+                {% for key, value in criteria.items() %}
+                    <li>
+                        {{ key }}:
+                        {% if value %}
+                            <span class="tick">✔</span>
+                        {% else %}
+                            <span class="cross">✘</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section job_match">
+            <h4>🔍 AI-Recommended Job Matches</h4>
+            <ul>
+                {% for role in job_roles %}
+                <li>{{ role }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section errors">
+            <h3>Grammatical / Content Errors</h3>
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section suggestions">
+            <h3>Suggestions for Improvement</h3>
+            <ul>
+                {% for suggestion in suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
