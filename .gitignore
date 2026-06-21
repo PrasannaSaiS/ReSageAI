@@ -1,2 +1,60 @@
+# Virtual environments
 *.venv
+venv/
+env/
+ENV/
 .env
+
+# Environment variables and secrets
+.env.local
+.env.*.local
+.env.prod
+.env.dev
+secrets.json
+*.key
+*.pem
+
+# API Keys and credentials
+.aws/
+.google/
+.gcp/
+credentials.json
+credentials/
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+dist/
+build/
+*.egg-info/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Uploads directory (optional - if storing sensitive data)
+uploads/
+temp/
+tmp/
+
+# OS
+Thumbs.db
+.DS_Store
