@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ReSage AI resume analysis results.">
+    <title>ReSage AI | Analysis Results</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    {# Determine score colour server-side #}
+    {% if score >= 80 %}
+        {% set score_color = '#16a34a' %}
+        {% set score_label = 'Strong' %}
+        {% set badge_bg    = 'rgba(22,163,74,0.09)' %}
+    {% elif score >= 60 %}
+        {% set score_color = '#d97706' %}
+        {% set score_label = 'Average' %}
+        {% set badge_bg    = 'rgba(217,119,6,0.09)' %}
+    {% else %}
+        {% set score_color = '#dc2626' %}
+        {% set score_label = 'Needs Work' %}
+        {% set badge_bg    = 'rgba(220,38,38,0.09)' %}
+    {% endif %}
+
+    <div class="page-shell results-shell">
+
+        <header class="topbar results-topbar">
+            <a href="/" class="back-link" aria-label="Return to upload page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                Back
+            </a>
+            <div class="brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ReSage AI" class="logo">
+                <div class="brand-text">
+                    <p class="brand-label">ReSage AI</p>
+                    <p class="brand-subtitle">Analysis results</p>
+                </div>
+            </div>
+            <div class="ai-indicator">
+                <span class="dot {{ 'dot-ok' if ai_enabled else 'dot-bad' }}" aria-hidden="true"></span>
+                <span class="ai-text">{{ 'AI-assisted' if ai_enabled else 'Rule-based' }}</span>
+            </div>
+        </header>
+
+        <main class="results-grid">
+
+            {# ── Score panel ─────────────────────────────────────── #}
+            <section class="panel score-panel" aria-label="Resume score">
+                <h2>Resume Score</h2>
+                <div class="panel-body">
+                    <div class="score-layout">
+                        <div class="score-ring-wrap">
+                            <div class="score-ring"
+                                 style="--pct: {{ score }}; --ring-color: {{ score_color }};"
+                                 role="img"
+                                 aria-label="Resume score: {{ score }} out of 100">
+                                <div class="score-inner">
+                                    <span class="score-number">{{ score }}</span>
+                                    <span class="score-denom">/100</span>
+                                </div>
+                            </div>
+                            <span class="score-badge" style="color: {{ score_color }}; background: {{ badge_bg }};">{{ score_label }}</span>
+                        </div>
+                        <div class="score-meta">
+                            <p class="eyebrow">Overall Assessment</p>
+                            <p class="score-desc">
+                                {% if score >= 80 %}
+                                    Your resume is well-structured and competitive. A few refinements could push it further.
+                                {% elif score >= 60 %}
+                                    A solid foundation. Focus on the suggestions below to stand out to recruiters.
+                                {% else %}
+                                    Several key areas need attention. Work through the suggestions to improve your score.
+                                {% endif %}
+                            </p>
+                            <span class="score-analysis-note">
+                                {{ 'AI-assisted analysis' if ai_enabled else 'Rule-based analysis — connect AI for deeper insights' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {# ── Profile overview ────────────────────────────────── #}
+            <section class="panel summary-panel" aria-label="Profile overview">
+                <h2>Profile Overview</h2>
+                <div class="panel-body">
+                    {% if criteria %}
+                    <ul class="criteria-list" role="list">
+                        {% for key, present in criteria.items() %}
+                        <li class="criteria-item">
+                            <span class="criteria-key">{{ key }}</span>
+                            <span class="status-badge {{ 'badge-ok' if present else 'badge-missing' }}" aria-label="{{ key }}: {{ 'present' if present else 'missing' }}">
+                                {% if present %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                Present
+                                {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                Missing
+                                {% endif %}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="panel-note">No profile sections could be detected.</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            {# ── Improvement suggestions ──────────────────────────── #}
+            <section class="panel suggestions-panel" aria-label="Improvement suggestions">
+                <h2>Improvement Suggestions</h2>
+                <div class="panel-body">
+                    {% if suggestions %}
+                    <ol class="numbered-list" role="list">
+                        {% for suggestion in suggestions %}
+                        <li>{{ suggestion }}</li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <p class="empty-note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        No suggestions — your resume looks great!
+                    </p>
+                    {% endif %}
+                </div>
+            </section>
+
+            {# ── Job matches ─────────────────────────────────────── #}
+            <section class="panel jobs-panel" aria-label="Recommended job matches">
+                <h2>Recommended Jobs</h2>
+                <div class="panel-body">
+                    <div class="jobs-field-note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        Best-fit field: <strong>{{ job_field }}</strong>
+                    </div>
+                    {% if job_roles %}
+                    <ul class="job-list" role="list">
+                        {% for role in job_roles %}
+                        <li class="job-chip">{{ role }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="panel-note">No job matches identified.</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            {# ── Quality checks ──────────────────────────────────── #}
+            <section class="panel errors-panel" aria-label="Quality checks">
+                <h2>Quality Checks</h2>
+                <div class="panel-body">
+                    {% if errors %}
+                    <ul class="error-list" role="list">
+                        {% for error in errors %}
+                        <li class="error-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <span>{{ error }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="empty-note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        No quality issues detected.
+                    </p>
+                    {% endif %}
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="results-footer">
+            <p>Analysis complete &nbsp;·&nbsp; <a href="/">Analyze another resume</a></p>
+        </footer>
+
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

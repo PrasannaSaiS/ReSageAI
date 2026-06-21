@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyzing Resume | ReSage AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 45%, #ffffff 100%);
+        }
+
+        .loader-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            max-width: 420px;
+            width: 90%;
+            animation: fadeUp 0.4s ease-out both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .spinner-track {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.75rem;
+        }
+
+        .spinner-ring {
+            box-sizing: border-box;
+            position: absolute;
+            inset: 0;
+            border: 5px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #4f46e5;
+            animation: spin 0.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-heading {
+            margin: 0 0 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+            letter-spacing: -0.02em;
+        }
+
+        .loader-sub {
+            margin: 0 0 1.75rem;
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .step-track {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            transition: color 0.3s ease;
+        }
+
+        .step.active { color: #1f2937; }
+        .step.done   { color: #16a34a; }
+
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
+        }
+
+        .brand-foot {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+
+        /* Fallback for no-JS */
+        noscript a {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <main class="loader-card" role="main" aria-label="Resume analysis in progress" data-filename="{{ filename | tojson | forceescape }}">
+        <div class="spinner-track" aria-hidden="true">
+            <div class="spinner-ring"></div>
+        </div>
+
+        <h1 class="loader-heading" aria-live="polite" id="statusHeading">Analyzing your resume…</h1>
+        <p class="loader-sub">Our AI is reading your resume. This usually takes a few seconds.</p>
+
+        <div class="step-track" aria-hidden="true">
+            <div class="step active" id="step1"><span class="step-dot"></span> Extracting text &amp; structure</div>
+            <div class="step" id="step2"><span class="step-dot"></span> Evaluating sections &amp; keywords</div>
+            <div class="step" id="step3"><span class="step-dot"></span> Generating AI feedback</div>
+            <div class="step" id="step4"><span class="step-dot"></span> Preparing your results</div>
+        </div>
+
+        <p class="brand-foot">Powered by ReSage AI</p>
+    </main>
+
+    <noscript>
+        <a href="/results?filename={{ filename }}">Click here to view your results</a>
+    </noscript>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

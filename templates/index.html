@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ReSage AI — Fast, research-backed resume screening and evaluation.">
+    <title>ReSage AI | Resume Screening</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="page-shell">
+
+        <header class="topbar">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ReSage AI" class="logo">
+                <div class="brand-text">
+                    <p class="brand-label">ReSage AI</p>
+                    <p class="brand-subtitle">Research-grade resume screening</p>
+                </div>
+            </div>
+            <div class="ai-indicator" title="{{ ai_message }}">
+                <span class="dot {{ 'dot-ok' if ai_enabled else 'dot-bad' }}" aria-hidden="true"></span>
+                <span class="ai-text">AI: {{ 'Available' if ai_enabled else 'Unavailable' }}</span>
+            </div>
+        </header>
+
+        <main class="hero-panel">
+            <section class="hero-copy">
+                <p class="eyebrow">Resume Evaluator</p>
+                <h1>Upload your resume for a fast, research-backed review.</h1>
+                <p class="hero-text">
+                    ReSage AI evaluates structure, keywords, and professional alignment—
+                    securely and in seconds.
+                </p>
+                <ul class="feature-list" aria-label="Key features">
+                    <li>AI-assisted scoring &amp; suggestions</li>
+                    <li>Grammar &amp; quality checks</li>
+                    <li>Job role recommendations</li>
+                    <li>Files deleted immediately after analysis</li>
+                </ul>
+            </section>
+
+            <section class="upload-card" id="drop-area" aria-label="Upload your resume">
+                <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+                    <label for="fileInput" class="file-control" id="dropLabel">
+                        <input type="file" name="resume" id="fileInput" accept=".pdf,.doc,.docx" aria-label="Choose a PDF, DOC, or DOCX resume file">
+                        <div class="file-control-content">
+                            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            <span class="file-control-text">Drop your resume here</span>
+                            <span class="file-control-sub">or click to browse</span>
+                        </div>
+                    </label>
+
+                    <p class="file-preview" id="file-name-display" aria-live="polite" aria-atomic="true"></p>
+
+                    <button type="submit" class="primary-button" id="submitBtn">
+                        Analyze Resume
+                    </button>
+                </form>
+
+                <p class="upload-note">Supports PDF, DOC, DOCX &nbsp;·&nbsp; Max 6 MB &nbsp;·&nbsp; Files deleted after analysis</p>
+
+                {% if error %}
+                <p class="form-error" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    {{ error }}
+                </p>
+                {% endif %}
+            </section>
+        </main>
+
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
