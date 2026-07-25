@@ -1,6 +1,6 @@
 # ReSage AI — AI-Powered Resume Screener
 
-> Research-grade resume screening for students and job seekers. Built as a college mini project.
+> Research-grade resume screening for students and job seekers.
 
 ReSage AI evaluates your resume using Google Gemini AI and rule-based analysis — scoring structure, flagging grammar issues, recommending improvements, and matching you to job roles, all in seconds. Files are deleted immediately after analysis.
 
