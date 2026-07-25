@@ -137,4 +137,4 @@ ReSageAI/
 
 ---
 
-*Built for a college mini project · © 2026 ReSage AI*
+*Built for a research project · © 2026 ReSage AI*
