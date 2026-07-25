@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ReSage AI — Fast, research-backed resume screening and evaluation.">
-    <title>ReSage AI | Resume Screening</title>
+    <meta name="description"
+        content="ReSage AI — AI-powered resume screening and evaluation. Get instant, research-backed feedback on your resume in seconds.">
+    <meta name="theme-color" content="#4f46e5">
+    <title>ReSage AI | AI-Powered Resume Screening</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
     <div class="page-shell">
 
         <header class="topbar">
             <div class="brand">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ReSage AI" class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ReSage AI logo" class="logo">
                 <div class="brand-text">
                     <p class="brand-label">ReSage AI</p>
                     <p class="brand-subtitle">Research-grade resume screening</p>
@@ -24,57 +30,196 @@
             </div>
         </header>
 
+        <section class="hero-section">
+            <h1 class="hero-headline">
+                Your resume,<br>
+                <span class="gradient-text">expertly reviewed</span>
+            </h1>
+            <p class="hero-sub">
+                Upload your resume and get instant AI-powered feedback - scoring, grammar checks,
+                improvement suggestions and job role matches in seconds.
+            </p>
+        </section>
+
         <main class="hero-panel">
-            <section class="hero-copy">
+            <section class="hero-copy" aria-labelledby="hero-heading">
                 <p class="eyebrow">Resume Evaluator</p>
-                <h1>Upload your resume for a fast, research-backed review.</h1>
+                <h2 id="hero-heading">Fast, research-backed resume review.</h2>
                 <p class="hero-text">
-                    ReSage AI evaluates structure, keywords, and professional alignment—
-                    securely and in seconds.
+                    ReSage AI evaluates structure, keywords, and professional alignment
+                    securely and privately. Your file is deleted immediately after analysis.
                 </p>
                 <ul class="feature-list" aria-label="Key features">
-                    <li>AI-assisted scoring &amp; suggestions</li>
-                    <li>Grammar &amp; quality checks</li>
-                    <li>Job role recommendations</li>
-                    <li>Files deleted immediately after analysis</li>
+                    <li>AI-assisted scoring &amp; personalised suggestions</li>
+                    <li>Grammar &amp; writing quality checks</li>
+                    <li>Job role recommendations based on your profile</li>
+                    <li>Profile section completeness analysis</li>
+                    <li>Files deleted immediately - zero data retention</li>
                 </ul>
+
+                <div class="trust-bar" role="list" aria-label="Trust indicators">
+                    <div class="trust-item" role="listitem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        100% Private
+                    </div>
+                    <span class="trust-sep" aria-hidden="true">·</span>
+                    <div class="trust-item" role="listitem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        Instant Results
+                    </div>
+                    <span class="trust-sep" aria-hidden="true">·</span>
+                    <div class="trust-item" role="listitem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        No Sign-up Required
+                    </div>
+                    <span class="trust-sep" aria-hidden="true">·</span>
+                    <div class="trust-item" role="listitem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        Completely Free
+                    </div>
+                </div>
             </section>
 
             <section class="upload-card" id="drop-area" aria-label="Upload your resume">
+                <p class="upload-card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    Upload Your Resume
+                </p>
+
                 <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
                     <label for="fileInput" class="file-control" id="dropLabel">
-                        <input type="file" name="resume" id="fileInput" accept=".pdf,.doc,.docx" aria-label="Choose a PDF, DOC, or DOCX resume file">
+                        <input type="file" name="resume" id="fileInput" accept=".pdf,.doc,.docx"
+                            aria-label="Choose a PDF, DOC, or DOCX resume file">
                         <div class="file-control-content">
-                            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
                             </svg>
                             <span class="file-control-text">Drop your resume here</span>
-                            <span class="file-control-sub">or click to browse</span>
+                            <span class="file-control-sub">PDF, DOC, or DOCX &nbsp;·&nbsp; Max 6 MB</span>
                         </div>
                     </label>
 
                     <p class="file-preview" id="file-name-display" aria-live="polite" aria-atomic="true"></p>
 
                     <button type="submit" class="primary-button" id="submitBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
                         Analyze Resume
                     </button>
                 </form>
 
-                <p class="upload-note">Supports PDF, DOC, DOCX &nbsp;·&nbsp; Max 6 MB &nbsp;·&nbsp; Files deleted after analysis</p>
+                <p class="upload-note">Files are deleted immediately after analysis &nbsp;·&nbsp; No account needed</p>
 
                 {% if error %}
                 <p class="form-error" role="alert">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        aria-hidden="true" style="flex-shrink:0;margin-top:1px">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
                     {{ error }}
                 </p>
                 {% endif %}
             </section>
         </main>
 
+        <section class="how-section" aria-labelledby="how-heading">
+            <h2 class="section-heading" id="how-heading">How it works</h2>
+            <p class="section-sub">Three steps to a stronger resume</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number" aria-hidden="true">1</div>
+                    <div class="step-icon-wrap" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                    </div>
+                    <h3>Upload</h3>
+                    <p>Drop your resume in PDF, DOC, or DOCX format. Your file is securely processed and deleted
+                        immediately.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number" aria-hidden="true">2</div>
+                    <div class="step-icon-wrap" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M5 5a10 10 0 0 0 0 14" />
+                        </svg>
+                    </div>
+                    <h3>AI Analysis</h3>
+                    <p>Gemini AI reads your resume, evaluates structure, scores sections, identifies grammar issues, and
+                        finds keyword gaps.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number" aria-hidden="true">3</div>
+                    <div class="step-icon-wrap" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                    </div>
+                    <h3>Get Results</h3>
+                    <p>Receive a detailed score, personalised improvement tips, job role recommendations, and a full
+                        profile breakdown.</p>
+                </div>
+            </div>
+        </section>
+
     </div>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ReSage AI" class="footer-logo">
+            <span class="footer-brand-name">ReSage AI</span>
+        </div>
+        <ul class="footer-links" aria-label="Footer links">
+            <li><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="/">Privacy</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 ReSage AI · Built for a college mini project</p>
+    </footer>
 
     <script src="/static/js/script.js"></script>
 </body>
+
 </html>

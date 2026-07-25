@@ -16,9 +16,18 @@ _ROOT = _BASE.parent                           # project root
 load_dotenv(_ROOT / ".env")
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-BASE_DIR   = _BASE
-ROOT_DIR   = _ROOT
-UPLOAD_DIR = _BASE / "uploads"
+BASE_DIR = _BASE
+ROOT_DIR = _ROOT
+
+# On cloud platforms (Railway, Render) the app directory is often read-only.
+# /tmp is always writable. Fall back to it if backend/uploads can't be created.
+_local_uploads = _BASE / "uploads"
+try:
+    _local_uploads.mkdir(exist_ok=True)
+    UPLOAD_DIR = _local_uploads
+except OSError:
+    import tempfile as _tempfile
+    UPLOAD_DIR = Path(_tempfile.gettempdir()) / "resage_uploads"
 
 # ── Flask ──────────────────────────────────────────────────────────────────────
 SECRET_KEY = os.getenv("FLASK_SECRET_KEY", uuid.uuid4().hex)

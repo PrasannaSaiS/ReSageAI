@@ -23,9 +23,11 @@ except ImportError:
     docx = None  # type: ignore
 
 try:
-    import textract
+    from PIL import Image as _PilImage  # type: ignore
+    _PIL_AVAILABLE = True
 except ImportError:
-    textract = None  # type: ignore
+    _PilImage = None  # type: ignore
+    _PIL_AVAILABLE = False
 
 # ── Technical term normalisation map ──────────────────────────────────────────
 # OCP: extend this dict to support new terms without touching extraction logic.
@@ -163,11 +165,24 @@ TECH_NORMALIZATION: dict[str, str] = {
     r"\b(orient\s*db)\b": "OrientDB",
     r"\b(graph\s*db)\b": "GraphDB",
     r"\b(arango\s*db)\b": "ArangoDB",
+    r"\b(saa\s*s)\b": "SaaS",
+    r"\b(jira)\b": "Jira",
+    r"\b(aws)\b": "AWS",
+    r"\b(azure)\b": "Azure",
+    r"\b(gcp)\b": "GCP",
+    r"\b(firebase)\b": "Firebase",
+    r"\b(shopify)\b": "Shopify",
+    r"\b(drupal)\b": "Drupal",
+    r"\b(Magento)\b": "Magento",
+    r"\b(oracle)\b": "Oracle",
+    r"\b(atlassian)\b": "Atlassian",
+    r"\b(agile)\b": "Agile",
 }
 
 
 # ── Private format extractors (OCP: add new ones freely) ──────────────────────
 def _extract_pdf(path: Path) -> tuple[str, bool]:
+    """Extract text and check for embedded images using pdfplumber."""
     if pdfplumber is None:
         raise RuntimeError("pdfplumber is not installed.")
     with pdfplumber.open(path) as pdf:
@@ -177,18 +192,23 @@ def _extract_pdf(path: Path) -> tuple[str, bool]:
 
 
 def _extract_docx(path: Path) -> tuple[str, bool]:
+    """Extract text from .docx and detect inline images with python-docx."""
     if docx is None:
         raise RuntimeError("python-docx is not installed.")
     doc = docx.Document(path)
     text = "\n".join(p.text for p in doc.paragraphs)
-    return text, bool(doc.inline_shapes)
+    has_photo = bool(doc.inline_shapes)
+    return text, has_photo
 
 
-def _extract_doc(path: Path) -> tuple[str, bool]:
-    if textract is None:
-        raise RuntimeError("textract is required for .doc files.")
-    text = textract.process(str(path)).decode("utf-8", errors="ignore")
-    return text, False
+def _extract_doc(path: Path) -> tuple[str, bool]:  # noqa: ARG001
+    """Legacy .doc support: not available on cloud deployments.
+    Raise a user-friendly error so callers can surface it cleanly.
+    """
+    raise RuntimeError(
+        "Legacy .doc files are not supported on this deployment. "
+        "Please save your resume as .docx or .pdf and upload again."
+    )
 
 
 _EXTRACTORS = {
