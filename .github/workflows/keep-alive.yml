@@ -1,0 +1,15 @@
+name: Keep Alive Render App
+
+on:
+  schedule:
+    # Runs every 14 minutes to beat the 15-minute sleep timer
+    - cron: '*/14 6-22 * * *'
+  workflow_dispatch: # Allows you to run it manually from the Actions tab if needed
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping ReSage AI deployment
+        # Uses curl to send a silent request to your live URL
+        run: curl -s https://resageai-xbh4.onrender.com/ > /dev/null
